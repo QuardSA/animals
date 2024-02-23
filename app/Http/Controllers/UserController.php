@@ -14,4 +14,8 @@ class UserController extends Controller
     {
         return view('authorization');
     }
+    public function presonaldata()
+    {
+        return view('presonaldata');
+    }
 }
