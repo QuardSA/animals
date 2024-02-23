@@ -2,23 +2,10 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4">Добавление информации о найденном животном</h2>
 
-    <form id="animalForm">
-      <!-- Контактный номер телефона -->
-      <div class="mb-3">
-        <label for="phoneNumber" class="form-label">Контактный номер телефона</label>
-        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
-      </div>
-
-      <!-- Email человека -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Email человека</label>
-        <input type="email" class="form-control" id="email" name="email" required>
-      </div>
-
       <!-- Вид животного -->
       <div class="mb-3">
         <label for="animalType">Вид животного</label>
-        <select class="form-select" id="animalType">
+        <select class="form-select" id="animalType" name="breed">
           <option value="cat">Кошка</option>
           <option value="dog">Собака</option>
           <option value="squirrel">Суслик</option>
