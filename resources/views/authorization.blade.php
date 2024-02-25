@@ -1,7 +1,7 @@
 <x-header></x-header>
 <div class="container">
     <h2 class="text-center">Авторизация</h2>
-    <form class="d-flex flex-column gap-2" action="" method="POST"
+    <form class="d-flex flex-column gap-2" action="{{route('authorization_validate')}}" method="POST"
         style="max-width:40%;margin:0 auto">
         @csrf
         <div class="form-group">

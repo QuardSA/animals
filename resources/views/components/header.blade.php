@@ -8,8 +8,8 @@
                 <h2><em><b>Новая жизнь</b></em></h2>
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-dark">Поиск</a></li>
-                <li><a href="/" class="nav-link px-2 link-dark">Добавить</a></li>
+                <li><a href="/search" class="nav-link px-2 link-dark">Поиск</a></li>
+                <li><a href="/addcard" class="nav-link px-2 link-dark">Добавить</a></li>
                 <li><a href="/" class="nav-link px-2 link-dark">Отзывы</a></li>
             </ul>
             <div class="col-md-3 text-end">
@@ -25,12 +25,12 @@
                 <h2><em><b>Новая жизнь</b></em></h2>
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-dark">Поиск</a></li>
-                <li><a href="/" class="nav-link px-2 link-dark">Добавить</a></li>
+                <li><a href="/search" class="nav-link px-2 link-dark">Поиск</a></li>
+                <li><a href="/addcard" class="nav-link px-2 link-dark">Добавить</a></li>
                 <li><a href="/" class="nav-link px-2 link-dark">Отзывы</a></li>
             </ul>
             <div class="col-md-3 text-end">
-                <a role="button" href="/personaldata" class="btn btn-success">Личный кабинет</a>
+                <a role="button" href="/presonaldata" class="btn btn-success">Личный кабинет</a>
                 <a role="button" href="/sign_out" class="btn btn-outline-danger">Выход</a>
             </div>
         </header>

@@ -22,19 +22,28 @@
 
     <!-- Информация о найденных животных -->
     <div class="row mt-4">
-      <div class="col-md-4">
-        <div class="card mb-4">
-          <img src="/img/1.webp" class="card-img-top" alt="Фото животного 1">
-          <div class="card-body">
-            <h5 class="card-title">Вид животного: Кот</h5>
-            <p class="card-text">Доп. информация: Найден на улице, порода: Британская</p>
-            <p class="card-text">Клеймо: ABC123</p>
-            <p class="card-text">Район: Центральный</p>
-            <p class="card-text">Дата найденного животного: 2024-02-23</p>
-            <p class="card-text">Контактный номер: +7 (XXX) XXX-XX-XX</p>
-          </div>
-        </div>
-      </div>
+        @forelse ($animals as  $animal)
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    @foreach ($animal->animal_Photo as $photo)
+                        <img src="/storage/img/{{$photo->animalPhoto}}" class="card-img-top" alt="Фото животного 1">
+                        @break
+                    @endforeach
+                  <div class="card-body">
+                    <h5 class="card-title">Вид животного: {{$animal->breeds_model->title}}</h5>
+                    <p class="card-text">Доп. информация:{{$animal->additionalInfo}} </p>
+                    <p class="card-text">Клеймо: {{$animal->claim}}</p>
+                    <p class="card-text">Район: {{$animal->district}}</p>
+                    <p class="card-text">Дата найденного животного: {{$animal->district}}</p>
+                    <p class="card-text">Контактный номер: {{$animal->users_model->phone}}</p>
+                    <a href="/{{$animal->id}}/card" role="button" class="btn btn-primary">Перейти</a>
+                  </div>
+                </div>
+            </div>
+        @empty
+            <p>Больше нет животных</p>
+        @endforelse
+        {{ $animals->withQueryString()->links('pagination::bootstrap-5') }}
     </div>
   </div>
 <x-footer></x-footer>

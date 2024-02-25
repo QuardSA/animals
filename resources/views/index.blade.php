@@ -1,24 +1,24 @@
 <x-header></x-header>
 <div class="container">
   <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    @forelse ($slider as $slide)
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="/img/1.webp" class="slider-img d-block w-100" alt="Изображение 1">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Кот</h5>
-          <p>Найден в парке. Очень ласковый и игривый.</p>
-          <a href="link-to-details-page" class="btn btn-primary">Подробнее</a>
+        <div class="carousel-item active">
+            @foreach ($slide->animal_Photo as $photo)
+            <img src="/storage/img/{{$photo->animalPhoto}}" class="card-img-top slider-img" alt="Фото животного 1">
+            @break
+            @endforeach
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{$slide->breeds_model->title}}</h5>
+            <p>{{$slide->additionalInfo}}</p>
+            <a href="/{{$slide->id}}/card" class="btn btn-primary">Подробнее</a>
+          </div>
         </div>
       </div>
-      <div class="carousel-item">
-        <img src="/img/2.webp" class="slider-img d-block w-100" alt="Изображение 2">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Собака</h5>
-          <p>Обнаружена на улице. Ищет свой дом.</p>
-          <a href="link-to-details-page" class="btn btn-primary">Подробнее</a>
-        </div>
-      </div>
-    </div>
+    @empty
+    <p>Нет данных</p>
+    @endforelse
+
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -69,18 +69,26 @@
     <h2>Найденные животные</h2>
     <div class="find d-flex flex-wrap">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            @forelse ($animals as $animal)
             <div class="col">
                 <div class="card mb-4">
-                    <img src="/img/2.webp" class="card-img-top" alt="Фото животного 1">
+                    @foreach ($animal->animal_Photo as $photo)
+                        <img src="/storage/img/{{$photo->animalPhoto}}" class="card-img-top" alt="Фото животного 1">
+                        @break
+                    @endforeach
                     <div class="card-body">
-                        <h5 class="card-title">Кот</h5>
-                        <p class="card-text">Район: Центральный</p>
-                        <p class="card-text">Телефон: +7 (XXX) XXX-XX-XX</p>
-                        <p class="card-text">Дата размещения: 2024-02-23</p>
-                        <p class="card-text">Добавлено: Зарегистрированным пользователем</p>
+                        <h5 class="card-title">{{$animal->breeds_model->title}}</h5>
+                        <p class="card-text">Район: {{$animal->district}}</p>
+                        <p class="card-text">Телефон: {{$animal->users_model->phone}}</p>
+                        <p class="card-text">Дата размещения: {{$animal->created_at}}</p>
+                        <p class="card-text">Добавлено: {{$animal->users_model->name}}</p>
+                        <a href="/{{$animal->id}}/card" role="button" class="btn btn-primary">Перейти</a>
                     </div>
                 </div>
             </div>
+            @empty
+            <p class="text-center text-danger">Больше нету объявлений</p>
+            @endforelse
         </div>
     </div>
     <div class="mt-4">
@@ -109,20 +117,10 @@
         </form>
       </в>
     </div>
-    <div class="d-flex flex-column gap-3">
-        <h2>Отзывы владельцев</h2>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Имя автора отзыва</h5>
-            <img src="/img/2.webp" class="card-img-top" alt="Фото животного" style="max-width:20vw">
-            <p class="card-text">Отзыв о том, как было найдено потерянное животное.</p>
-            <p class="card-text">Дата отзыва: 2024-02-23</p>
-          </div>
-        </div>
-    </div>
     <div class="advert">
         <h2>Подписка на новости</h2>
-            <form>
+            <form method="POST" action="/sub">
+                @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Введите ваш email" required>
@@ -134,5 +132,33 @@
             <button type="submit" class="btn btn-primary">Подписаться</button>
         </form>
     </div>
+    <div class="d-flex flex-column gap-3">
+        <h2>Оставить отзыв</h2>
+        <form method="POST" action="/comments" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label for="animalPhoto" class="form-label">Фото найденного животного</label>
+                <input type="file" class="form-control" id="animalPhoto" name="img" required>
+              </div>
+              <div class="mb-3">
+                <label for="additionalInfo" class="form-label">Дополнительная информация</label>
+                <textarea class="form-control" id="additionalInfo" name="text_comment" required></textarea>
+              </div>
+            <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+        </form>
+            <h2>Отзывы владельцев</h2>
+            @forelse ($comments as $comment)
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{$comment->user->name}}</h5>
+                  <img src="/storage/img/{{$comment->img}}" class="card-img-top" alt="Фото животного" style="max-width:20vw">
+                  <p class="card-text">{{$comment->text_comment}}</p>
+                  <p class="card-text">Дата отзыва: {{$comment->created_at}}</p>
+                </div>
+              </div>
+            @empty
+              <p class="text-danger">Отзывов нету</p>
+            @endforelse
+
 </div>
 <x-footer></x-footer>

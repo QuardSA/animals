@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('text_comment');
             $table->string('img');
-            $table->foreignId('animals_id')->references('id')->on('animals');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

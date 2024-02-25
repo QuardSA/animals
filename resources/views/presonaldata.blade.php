@@ -3,11 +3,11 @@
 <!-- Общая информация о пользователе -->
 <div class="row mb-4">
     <div class="col-md-6">
-      <h4>Номер телефона: <span id="phoneNumber">+7 (XXX) XXX-XX-XX</span></h4>
+      <h4>Номер телефона: <span id="phoneNumber">{{Auth::user()->phone}}</span></h4>
       <button class="btn btn-secondary">Изменить</button>
     </div>
     <div class="col-md-6">
-      <h4>Email: <span id="email">user@example.com</span></h4>
+      <h4>Email: <span id="email">{{Auth::user()->email}}</span></h4>
       <button class="btn btn-secondary">Изменить</button>
     </div>
   </div>
@@ -23,7 +23,7 @@
 
   <div class="row mb-4">
     <div class="col-md-6">
-      <h4>Дата регистрации: <span id="registrationDate">2022-01-01</span></h4>
+      <h4>Дата регистрации: <span id="registrationDate">{{Auth::user()->created_at}}</span></h4>
     </div>
     <div class="col-md-6">
       <h4>Дней на сайте: <span id="daysOnSite">365</span></h4>

@@ -19,7 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
+        'phone',
+        'roles',
         'password',
     ];
 
@@ -42,4 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function animals_model() {
+        return $this->HasMany(animal::class, 'users');
+    }
+    public function comments() {
+        return $this->HasMany(comment::class, 'user_id');
+    }
 }
