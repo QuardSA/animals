@@ -73,7 +73,7 @@ class UserController extends Controller
 
         if (Auth::attempt(["email" => $user_authorization['email'], "password" => $user_authorization['password']])) {
             if (Auth::user()->role == 2) {
-                return redirect('/admin/index')->with('success', 'Вы вошли как Администратор');
+                return redirect('/moderator/index')->with('success', 'Вы вошли как Модератор');
             } else {
                 return redirect('/')->with('success', 'Добро пожаловать');
             }

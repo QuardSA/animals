@@ -14,10 +14,10 @@ class MainController extends Controller
 {
     public function index()
     {
-        $slider =animal::with('animal_Photo')->where("status", 2)->orderby('created_at','desc')->take(3)->get();
-        $animals =animal::with('animal_Photo')->where("status", 3)->take(6)->get();
+        $slider = animal::with('animal_Photo')->where("status", 2)->orderby('created_at', 'desc')->take(3)->get();
+        $animals = animal::with('animal_Photo')->where("status", 3)->take(6)->get();
         $comments = comment::orderby('created_at', 'desc')->take(3)->get();
-        return view('index',['slider'=>$slider, 'animals'=>$animals, 'comments'=>$comments]);
+        return view('index', ['slider' => $slider, 'animals' => $animals, 'comments' => $comments]);
     }
 
     public function sub(Request $request)
@@ -58,9 +58,10 @@ class MainController extends Controller
     public function addcard()
     {
         $breeds = breed::all();
-        return view('addcard',['breeds'=>$breeds]);
+        return view('addcard', ['breeds' => $breeds]);
     }
-    public function addcard_validate(Request $request) {
+    public function addcard_validate(Request $request)
+    {
         $request->validate([
             "additionalInfo" => "required",
             "district" => "required",
@@ -77,9 +78,9 @@ class MainController extends Controller
             "check.required" => "Поставьте галочку напротив обработки персональных данных!",
         ]);
 
-        $animalsInfo= $request->all();
+        $animalsInfo = $request->all();
         $author = Auth::user()->id;
-        $animalsAdd=animal::create([
+        $animalsAdd = animal::create([
             'claim' => $animalsInfo['claim'],
             'additionalInfo' => $animalsInfo['additionalInfo'],
             'district' => $animalsInfo['district'],
@@ -88,9 +89,9 @@ class MainController extends Controller
             'status' => 1,
             'users' => $author,
         ]);
-        $photo=$request->file('animalPhoto');
-        if(isset($photo)){
-            foreach ($photo as $photos){
+        $photo = $request->file('animalPhoto');
+        if (isset($photo)) {
+            foreach ($photo as $photos) {
                 $name = $photos->hashName();
                 $patch = $photos->store('public/img');
                 fotoanimal::create([
@@ -99,20 +100,22 @@ class MainController extends Controller
                 ]);
             }
         }
-        if($animalsAdd && $photo) {
+        if ($animalsAdd && $photo) {
             return redirect()->back()->with('success', 'Добавление прошло успешно!');
         } else {
             return redirect()->back()->with('error', 'Произошла ошибка!');
         }
     }
 
-    public function card($id){
-        $cardinfo=animal::find($id);
-        return view('card',['cardinfo'=>$cardinfo]);
+    public function card($id)
+    {
+        $cardinfo = animal::find($id);
+        return view('card', ['cardinfo' => $cardinfo]);
     }
 
-    public function search(){
-        $animals = animal::paginate(10);
-        return view('search',['animals'=>$animals]);
+    public function search()
+    {
+        $animals = animal::where("status", 2)->paginate(10);
+        return view('search', ['animals' => $animals]);
     }
 }
