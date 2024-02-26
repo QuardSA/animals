@@ -113,9 +113,25 @@ class MainController extends Controller
         return view('card', ['cardinfo' => $cardinfo]);
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        $animals = animal::where("status", 2)->paginate(10);
-        return view('search', ['animals' => $animals]);
+        $breeds = breed::all();
+
+        $breedId = $request->input('breed');
+        $location = $request->input('location');
+
+        $query = animal::query()->where("status", 2);
+
+        if ($breedId) {
+            $query->where('breed_id', $breedId);
+        }
+
+        if ($location) {
+            $query->where('district', 'like', '%' . $location . '%');
+        }
+
+        $animals = $query->paginate(10);
+
+        return view('search', compact('animals', 'breeds'));
     }
 }

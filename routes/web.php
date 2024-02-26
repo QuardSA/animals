@@ -34,9 +34,13 @@ Route::get('/addcard',[MainController::class,'addcard']);
 
 Route::get('/{id}/card',[MainController::class, 'card']);
 Route::get('/search',[MainController::class, 'search']);
+Route::post('/search',[MainController::class, 'search'])->name('filter');
 
 Route::get('/moderator/index',[ModerController::class, 'index']);
 Route::post('/animals/{id}/change-status', [ModerController::class, 'changeStatus'])->name('change-status');
 Route::get('/moderator/index',[ModerController::class, 'index'])->name('admin');
 
 Route::get('/presonaldata', [UserController::class, "presonaldata"]);
+Route::delete('/presonaldata/{id}', [UserController::class, "destroy"])->name('animal.destroy');
+Route::post('/update-phone', [UserController::class, 'updatePhone'])->name('update-phone');
+Route::post('/update-email', [UserController::class, 'updateEmail'])->name('update-email');

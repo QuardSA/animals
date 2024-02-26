@@ -3,14 +3,14 @@
     <h2 class="text-center mb-4">Результаты поиска животных</h2>
 
     <!-- Форма поиска -->
-    <form>
+    <form method="POST" action="{{ route('filter') }}">
+        @csrf
       <div class="mb-3">
         <label for="animalType">Вид животного</label>
-        <select class="form-select" id="animalType">
-          <option value="cat">Кошка</option>
-          <option value="dog">Собака</option>
-          <option value="squirrel">Суслик</option>
-          <option value="hamster">Хорек</option>
+        <select class="form-select" id="animalType" name="breed">
+            @foreach ($breeds as $breed)
+            <option value="{{$breed->id}}">{{$breed->title}}</option>
+            @endforeach
         </select>
       </div>
       <div class="mb-3">

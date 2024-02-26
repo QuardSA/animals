@@ -29,14 +29,6 @@
     </button>
   </div>
 
-  <div class="search mt-4">
-    <h2>Быстрый поиск животного</h2>
-    <div class="input-group mb-3">
-      <input type="text" id="animalSearch" class="form-control" placeholder="Введите вид животного" autocomplete="off">
-      <button class="btn btn-primary" type="button">Искать</button>
-    </div>
-  </div>
-
     <div class="about_us" class="mt-4">
         <h2>Факты о нас</h2>
         <div class="row">

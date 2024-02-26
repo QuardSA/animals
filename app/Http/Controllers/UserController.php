@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\breed;
+use App\Models\animal;
+use App\Models\fotoanimal;
+use App\Models\subscription;
+use App\Models\comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -89,6 +94,44 @@ class UserController extends Controller
     }
     public function presonaldata()
     {
-        return view('presonaldata');
+        $activeAnimals = animal::where('status', '=', '2')->where('users', Auth::user()->id)->get();
+        $moderationAnimals = animal::where('status', '=', '1')->where('users', Auth::user()->id)->get();
+        return view('presonaldata', compact('activeAnimals', 'moderationAnimals'));
     }
+    public function destroy($id)
+    {
+        $animal = Animal::findOrFail($id);
+
+        $animal->animal_Photo()->delete();
+
+        $animal->delete();
+
+        return redirect()->back()->with('success', 'Объявление успешно удалено');
+    }
+    public function updatePhone(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string|max:255',
+        ]);
+
+        Auth::user()->update([
+            'phone' => $request->input('phone'),
+        ]);
+
+        return redirect()->back()->with('success', 'Номер телефона успешно изменен.');
+    }
+
+    public function updateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email|max:255',
+        ]);
+
+        Auth::user()->update([
+            'email' => $request->input('email'),
+        ]);
+
+        return redirect()->back()->with('success', 'Email успешно изменен.');
+    }
+
 }
